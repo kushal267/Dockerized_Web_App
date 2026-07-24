@@ -1,50 +1,95 @@
 {% extends "base.html" %}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login - Smart Task Manager{% endblock %}
 
 {% block content %}
+<style>
+    /* Custom Modern Styling for Auth Card */
+    .auth-card {
+        border: none;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    
+    .form-floating > label {
+        color: #6c757d;
+    }
+    
+    .form-control:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25);
+    }
+    
+    .google-btn {
+        background-color: #fff;
+        color: #3b3b3b;
+        border: 1px solid #ddd;
+        transition: background-color 0.2s, box-shadow 0.2s;
+    }
+    
+    .google-btn:hover {
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+</style>
 
-<div class="container mt-5">
-
+<div class="container mt-5 mb-5">
     <div class="row justify-content-center">
-
-        <div class="col-md-5">
-
-            <div class="card shadow p-4">
-
-                <h2 class="text-center mb-4">
-                    Login
-                </h2>
+        <div class="col-md-6 col-lg-5">
+            <div class="card auth-card p-4 p-md-5 bg-white">
+                
+                <!-- Header Icon & Title -->
+                <div class="text-center mb-4">
+                    <div class="d-inline-flex justify-content-center align-items-center bg-primary text-white rounded-circle mb-3 shadow-sm" style="width: 60px; height: 60px;">
+                        <i class="fas fa-user-lock fs-3"></i>
+                    </div>
+                    <h2 class="fw-bold text-dark">Welcome Back</h2>
+                    <p class="text-muted small">Sign in to manage your tasks efficiently</p>
+                </div>
 
                 <form method="POST" action="/">
+                    
+                    <!-- Floating Email Input -->
+                    <div class="form-floating mb-3">
+                        <input type="email" name="email" class="form-control fw-bold" id="floatingEmail" placeholder="name@example.com" required>
+                        <label for="floatingEmail"><i class="fas fa-envelope me-2"></i>Email address</label>
+                    </div>
 
-                    <input type="email"
-                            name="email"
-                           class="form-control mb-3"
-                           placeholder="Email">
+                    <!-- Floating Password Input -->
+                    <div class="form-floating mb-4">
+                        <input type="password" name="password" class="form-control fw-bold" id="floatingPassword" placeholder="Password" required>
+                        <label for="floatingPassword"><i class="fas fa-lock me-2"></i>Password</label>
+                    </div>
 
-                    <input type="password"
-                            name="password"
-                           class="form-control mb-3"
-                           placeholder="Password">
-
-
-
-                    <button type="submit"
-                            class="btn btn-primary w-100">
-                        Login
+                    <!-- Standard Login Button -->
+                    <button type="submit" class="btn btn-primary btn-lg w-100 fw-bold rounded-pill shadow-sm">
+                        <i class="fas fa-sign-in-alt me-2"></i> Log In
                     </button>
-
+                    
                 </form>
-                 <div class="text-center mt-3">
-    <p>Don't have an account? <a href="/register" class="text-decoration-none">Register here</a></p>
-                 </div>
+
+                <!-- Divider -->
+                <div class="d-flex align-items-center my-4">
+                    <hr class="flex-grow-1 text-muted opacity-25">
+                    <span class="mx-3 text-muted small fw-bold">OR</span>
+                    <hr class="flex-grow-1 text-muted opacity-25">
+                </div>
+
+                <!-- Google Login Button -->
+                <a href="/login/google" class="btn google-btn btn-lg w-100 fw-bold rounded-pill d-flex align-items-center justify-content-center gap-2">
+                    <img src="https://www.google.com/favicon.ico" alt="Google Logo" width="20" height="20">
+                    Continue with Google
+                </a>
+
+                <!-- Register Link -->
+                <div class="text-center mt-4 pt-3 border-top">
+                    <p class="mb-0 text-muted">Don't have an account? 
+                        <a href="/register" class="text-decoration-none fw-bold text-primary">Register here</a>
+                    </p>
+                </div>
+                
             </div>
-
         </div>
-
     </div>
-
 </div>
-
 {% endblock %}

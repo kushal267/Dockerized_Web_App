@@ -18,7 +18,7 @@ Edit Task
                 <!-- Card Body -->
                 <div class="card-body p-4 p-md-5 bg-light shadow-inner">
                     <form method="POST">
-                        
+                        <input type="hidden" name="next" value="{{ next_url }}">
                         <!-- Title Field -->
                         <div class="mb-4">
                             <label class="form-label fw-bold text-muted">Task Title</label>
@@ -60,8 +60,8 @@ Edit Task
                         </div>
 
                         <!-- Action Buttons -->
-                        <div class="d-flex justify-content-end gap-3 mt-4 pt-3 border-top">
-                            <a href="/dashboard" class="btn btn-outline-secondary px-4 fw-bold">Cancel</a>
+                        <div class="d-flex justify-content-end gap-3 mt-4  border-top pt-4">
+                            <a href="{{ next_url }}" class="btn btn-outline-secondary px-4 fw-bold shadow-sm">Cancel</a>
                             <button type="submit" class="btn btn-success px-4 fw-bold">Update Task</button>
                         </div>
 

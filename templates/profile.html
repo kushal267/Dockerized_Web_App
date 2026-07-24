@@ -1,86 +1,201 @@
 {% extends "base.html" %}
 
 {% block title %}
-Profile
+My Profile
 {% endblock %}
 
 {% block content %}
+<!-- FontAwesome for Professional Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-<div class="container mt-5">
+<style>
+    /* Custom Premium CSS for Profile */
+    .profile-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+        background: #fff;
+    }
+    
+    /* Sleek Gradient Cover */
+    .profile-cover {
+        height: 140px;
+        background: linear-gradient(135deg, #4f46e5 0%, #0ea5e9 100%);
+        position: relative;
+    }
 
-<div class="card shadow p-5">
+    /* Avatar Wrapper with Hover Effect */
+    .avatar-wrapper {
+        position: relative;
+        width: 150px;
+        height: 150px;
+        margin: -75px auto 20px; /* Overlaps the cover */
+        cursor: pointer;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+        overflow: hidden;
+        background-color: #fff;
+    }
+    
+    .avatar-wrapper:hover {
+        transform: translateY(-3px);
+    }
 
-<div class="text-center">
-    {% if user.profile_pic %}
-        <img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" 
-             width="180" height="180" class="rounded-circle shadow object-fit-cover">
-    {% else %}
-        <!-- Dynamic Initials Avatar -->
-        <div class="rounded-circle shadow d-flex justify-content-center align-items-center bg-primary text-white mx-auto" 
-             style="width: 180px; height: 180px; font-size: 80px; font-weight: bold;">
-            {{ user.name[0] | upper }}
+    /* Dark Overlay that appears on hover */
+    .avatar-overlay {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .avatar-wrapper:hover .avatar-overlay {
+        opacity: 1;
+    }
+
+    /* Small Pencil Badge */
+    .edit-badge {
+        position: absolute;
+        bottom: 0;
+        right: 10px;
+        background: #fff;
+        color: #0ea5e9;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 2;
+        border: 2px solid #f8f9fa;
+    }
+
+    /* Input Focus Styling */
+    .form-control:focus {
+        border-color: #0ea5e9;
+        box-shadow: 0 0 0 0.25rem rgba(14, 165, 233, 0.25);
+    }
+</style>
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="profile-card">
+                
+                <!-- Top Gradient Cover -->
+                <div class="profile-cover"></div>
+                
+                <div class="card-body px-4 px-md-5 pb-5 pt-0">
+                    
+                    <!-- Profile Avatar Section -->
+                    <div class="text-center position-relative">
+                        
+                        <!-- SINGLE CLICK EVENT HERE -->
+                        <div class="avatar-wrapper" onclick="showProfileOptions()">
+                            
+                            {% if user.profile_pic %}
+                                <img src="{{ url_for('static', filename='uploads/' + user.profile_pic) }}" 
+                                     class="w-100 h-100 object-fit-cover">
+                            {% else %}
+                                <div class="w-100 h-100 d-flex justify-content-center align-items-center bg-primary text-white" 
+                                     style="font-size: 70px; font-weight: bold;">
+                                    {{ user.name[0] | upper }}
+                                </div>
+                            {% endif %}
+                            
+                            <!-- Dark Hover Overlay -->
+                            <div class="avatar-overlay">
+                                <i class="fas fa-camera fs-3 mb-1"></i>
+                                <small class="fw-bold">Change</small>
+                            </div>
+                        </div>
+
+                        <!-- Pencil Badge for visual cue -->
+                        <div class="edit-badge" onclick="showProfileOptions()" style="cursor: pointer; margin-top: -50px; margin-right: 35%; position: relative; float: right;">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        
+                        <h3 class="mt-2 fw-bold text-dark">{{ user.name }}</h3>
+                        <p class="text-muted mb-4"><i class="fas fa-envelope me-2"></i>{{ user.email }}</p>
+                    </div>
+
+                    <!-- Profile Update Form with Floating Labels -->
+                    <form method="POST" enctype="multipart/form-data" id="profileForm">
+                        
+                        <!-- HIDDEN File Input (Triggered by JS) -->
+                        <input type="file" name="profile_pic" id="profilePicInput" class="d-none" accept="image/*" onchange="submitForm()">
+
+                        <div class="form-floating mb-4">
+                            <input type="text" name="name" id="floatingName" class="form-control fw-bold" value="{{ user.name }}" placeholder="Your Name" required>
+                            <label for="floatingName" class="text-muted"><i class="fas fa-user me-2"></i>Full Name</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="email" name="email" id="floatingEmail" class="form-control fw-bold" value="{{ user.email }}" placeholder="name@example.com" required>
+                            <label for="floatingEmail" class="text-muted"><i class="fas fa-at me-2"></i>Email Address</label>
+                        </div>
+                        <div class="form-floating mb-4">
+                              <textarea name="bio" id="floatingBio" class="form-control" placeholder="Write something about yourself" style="height: 120px">{{ user.bio }}</textarea>
+                              <label for="floatingBio" class="text-muted"><i class="fas fa-info-circle me-2"></i>About Me</label>
+                        </div>
+                                                      
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg fw-bold rounded-pill shadow-sm">
+                                <i class="fas fa-save me-2"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
         </div>
-    {% endif %}
-
-    <h3 class="mt-4">{{ user.name }}</h3>
-    <p class="text-muted">{{ user.email }}</p>
-</div>
-<hr>
-
-<a href="/delete_photo"
-class="btn btn-danger">
-
-Remove Photo
-
-</a>
-<form method="POST"
-      enctype="multipart/form-data">
-
-<label>Name</label>
-
-<input
-type="text"
-name="name"
-class="form-control mb-3"
-value="{{user.name}}">
-
-<label>Email</label>
-
-<input
-type="email"
-name="email"
-class="form-control mb-3"
-value="{{user.email}}">
-
-<label>About</label>
-
-<textarea
-name="bio"
-class="form-control mb-3"
-rows="5">
-
-{{user.bio}}
-
-</textarea>
-
-<label>Profile Photo</label>
-
-<input
-type="file"
-name="photo"
-class="form-control mb-4">
-
-<button
-class="btn btn-primary">
-
-Save Changes
-
-</button>
-
-</form>
-
+    </div>
 </div>
 
-</div>
+<!-- SweetAlert2 Library for Professional Popups -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function showProfileOptions() {
+        Swal.fire({
+            title: 'Update Profile Picture',
+            text: 'Choose an option for your avatar',
+            icon: 'camera',
+            showCancelButton: true,
+            showDenyButton: true,
+            confirmButtonText: '<i class="fas fa-upload me-1"></i> Upload',
+            denyButtonText: '<i class="fas fa-trash me-1"></i> Remove',
+            cancelButtonText: 'Cancel',
+            confirmButtonColor: '#0ea5e9',
+            denyButtonColor: '#ef4444',
+            customClass: {
+                confirmButton: 'rounded-pill px-4',
+                denyButton: 'rounded-pill px-4',
+                cancelButton: 'rounded-pill px-4'
+            }
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('profilePicInput').click();
+            } else if (result.isDenied) {
+                window.location.href = "/delete_photo";
+            }
+        });
+    }
 
+    function submitForm() {
+        if(document.getElementById('profilePicInput').value !== "") {
+            document.getElementById('profileForm').submit();
+        }
+    }
+</script>
 {% endblock %}
