@@ -42,25 +42,25 @@ Dashboard
     <div class="row mb-4">
         <div class="col-md-3">
             <div class="card p-3 shadow stats-card border-0 border-start border-5 border-dark clickable-card" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">
-                <h5 class="text-muted">Total</h5>
+                <div class="h5 text-muted">Total</div>
                 <h2>{{ total }}</h2>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card p-3 shadow stats-card border-0 border-start border-5 border-secondary clickable-card" onclick="highlightColumn('pending-col', 'highlight-pending')">
-                <h5 class="text-muted">Pending</h5>
+                <div class="h5 text-muted">Pending</div>
                 <h2>{{ pending }}</h2>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card p-3 shadow stats-card border-0 border-start border-5 border-primary clickable-card" onclick="highlightColumn('progress-col', 'highlight-progress')">
-                <h5 class="text-muted">In Progress</h5>
+                <div class="h5 text-muted">In Progress</div>
                 <h2>{{ in_progress }}</h2>
             </div>
         </div>
         <div class="col-md-3">
             <div class="card p-3 shadow stats-card border-0 border-start border-5 border-success clickable-card" onclick="highlightColumn('completed-col', 'highlight-completed')">
-                <h5 class="text-muted">Completed</h5>
+                <div class="h5 text-muted">Completed</div>
                 <h2>{{ completed }}</h2>
             </div>
         </div>
@@ -151,7 +151,7 @@ Dashboard
     <div class="card shadow p-4 mb-5">
         <h5 class="mb-3">Completion Progress</h5>
         <div class="progress mb-4" style="height: 25px;">
-            <div class="progress-bar bg-success" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar bg-success" role="progressbar" style="width: {{ percentage }}%;" aria-valuenow="{{ percentage }}" aria-valuemin="0" aria-valuemax="100" aria-label="Task completion progress">
                 {{ percentage }}%
             </div>
         </div>
@@ -193,25 +193,25 @@ Dashboard
         <form method="POST" action="/add_task">
             <div class="row">
                 <div class="col-md-6">
-                    <input type="text" name="title" class="form-control mb-3" placeholder="Task Title" required>
+                    <input type="text" name="title" class="form-control mb-3" placeholder="Task Title" required aria-label="Task Title">
                 </div>
                 <div class="col-md-6">
-                    <input type="date" name="due_date" class="form-control mb-3" required>
+                    <input type="date" name="due_date" class="form-control mb-3" required aria-label="Select Due Date">
                 </div>
             </div>
             
-            <textarea name="description" class="form-control mb-3" placeholder="Description"></textarea>
+            <textarea name="description" class="form-control mb-3" placeholder="Description" aria-label="Task Description"></textarea>
             
             <div class="row">
                 <div class="col-md-6">
-                    <select name="priority" class="form-select mb-3">
+                    <select name="priority" class="form-select mb-3" aria-label="Select Task Priority">
                         <option value="Low">Low Priority</option>
                         <option value="Medium">Medium Priority</option>
                         <option value="High">High Priority</option>
                     </select>
                 </div>
                 <div class="col-md-6">
-                    <select name="status" class="form-select mb-3">
+                    <select name="status" class="form-select mb-3" aria-label="Select Task Status">
                         <option value="Pending">Pending</option>
                         <option value="In Progress">In Progress</option>
                         <option value="Completed">Completed</option>
@@ -229,12 +229,12 @@ Dashboard
         
         <!-- Column 1: PENDING -->
         <div class="col-md-4 mb-4" id="pending-col">
-            <h5 class="text-center bg-secondary text-white p-2 rounded shadow-sm">Pending</h5>
+            <div class="h5 text-center bg-secondary text-white p-2 rounded shadow-sm">Pending</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="pending-list" data-status="Pending" style="min-height: 50vh;">
                 
                 <div class="empty-state text-center mt-5 opacity-50">
-                    <h1 class="display-3 mb-2">☕</h1>
-                    <h6 class="fw-bold">All caught up!</h6>
+                    <div class="display-3 mb-2">☕</div>
+                    <div class="fw-bold">All caught up!</div>
                     <small>No pending tasks here.</small>
                 </div>
                 
@@ -263,12 +263,12 @@ Dashboard
 
         <!-- Column 2: IN PROGRESS -->
         <div class="col-md-4 mb-4" id="progress-col">
-            <h5 class="text-center bg-primary text-white p-2 rounded shadow-sm">In Progress</h5>
+            <div class="h5 text-center bg-primary text-white p-2 rounded shadow-sm">In Progress</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="progress-list" data-status="In Progress" style="min-height: 50vh;">
                 
                 <div class="empty-state text-center mt-5 opacity-50">
-                    <h1 class="display-3 mb-2">🚀</h1>
-                    <h6 class="fw-bold">Nothing in progress.</h6>
+                    <div class="display-3 mb-2">🚀</div>
+                    <div class="fw-bold">Nothing in progress.</div>
                     <small>Drag a task here to start working.</small>
                 </div>
                 
@@ -297,12 +297,12 @@ Dashboard
 
         <!-- Column 3: COMPLETED -->
         <div class="col-md-4 mb-4" id="completed-col">
-            <h5 class="text-center bg-success text-white p-2 rounded shadow-sm">Completed</h5>
+            <div class="h5 text-center bg-success text-white p-2 rounded shadow-sm">Completed</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="completed-list" data-status="Completed" style="min-height: 50vh;">
                 
             <div class="empty-state text-center mt-5 opacity-50">
-                <h1 class="display-3 mb-2">🎯</h1>
-                <h6 class="fw-bold">No goals crushed yet.</h6>
+                <div class="display-3 mb-2">🎯</div>
+                <div class="fw-bold">No goals crushed yet.</div>
                 <small>Complete tasks to see them here.</small>
             </div>   
                 {% for task in tasks %}

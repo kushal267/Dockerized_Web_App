@@ -17,6 +17,7 @@ from authlib.integrations.flask_client import OAuth
 import secrets
 from dotenv import load_dotenv
 load_dotenv()
+from PIL import Image
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 
 from flask import (
@@ -326,16 +327,30 @@ def profile():
         user.email = request.form["email"]
         user.bio = request.form["bio"]
         if 'profile_pic' in request.files:
-            file = request.files['profile_pic']
-            if file and file.filename != '':
-                filename = secure_filename(file.filename)
-                
-                # File ko static/uploads mein save karna
-                filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-                file.save(filepath)
-                
-                # Database mein filename update karna
-                user.profile_pic = filename
+                    file = request.files['profile_pic']
+                    if file and file.filename != '':
+                        filename = secure_filename(file.filename)
+                        filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                        
+                        # --- PILLOW IMAGE ENHANCEMENT & RESIZING ---
+                        # Image ko memory mein open karein
+                        img = Image.open(file)
+                        
+                        # Agar image RGBA (transparent PNG) hai, toh error se bachne ke liye RGB convert karein
+                        if img.mode != 'RGB':
+                            img = img.convert('RGB')
+                        
+                        # Precise resolution set karein (200x200 for crisp profile pic)
+                        output_size = (200, 200)
+                        img.thumbnail(output_size)
+                        
+                        # Optimize karke save karein (Quality maintain karte hue file size kam)
+                        img.save(filepath, format='JPEG', optimize=True, quality=85)
+                        
+                        # Database mein naya naam update karna (Hamesha .jpg mein save hoga)
+                        # Ensure the filename ends with .jpg since we saved as JPEG
+                        new_filename = filename.rsplit('.', 1)[0] + '.jpg'
+                        user.profile_pic = new_filename
         db.session.commit()
         return redirect("/profile")
 
