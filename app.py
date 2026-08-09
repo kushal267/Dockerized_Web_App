@@ -130,15 +130,15 @@ def google_login():
 
 @app.route('/authorize')
 def authorize():
-    # Google se wapas aane ke baad data process karna
+    
     token = google.authorize_access_token()
     user_info = token.get('userinfo')
     
-    # Check karein agar user database mein pehle se hai
+    # Check user and create user
     user = User.query.filter_by(email=user_info['email']).first()
     
     if not user:
-        # Naya user banayein (Password required hota hai, toh random de denge)
+       
         random_password = secrets.token_hex(16)
         from werkzeug.security import generate_password_hash
         hashed_pw = generate_password_hash(random_password)
@@ -147,7 +147,7 @@ def authorize():
         db.session.add(user)
         db.session.commit()
         
-    # User ko login karwa dein
+    # User login 
     session['user_id'] = user.id
     flash('Successfully logged in with Google!', 'success')
     return redirect('/dashboard')   
@@ -247,11 +247,11 @@ def edit_task(id):
         db.session.commit()
         flash('Task successfully updated!', 'success')
         
-        # User ko wahi bhejo jahan se wo aaya tha
+
         next_url = request.form.get('next', '/dashboard')
         return redirect(next_url)
         
-    # GET request par 'next' url pakdo aur HTML mein bhejo
+    
     next_url = request.args.get('next', '/dashboard')
     return render_template('edit_task.html', task=task, next_url=next_url)
 
@@ -292,7 +292,7 @@ def update_status(id):
         
     task = Task.query.get_or_404(id)
     
-    # Security check: User apna hi task edit kar raha hai
+   
     if task.user_id != session["user_id"]:
         return jsonify({"error": "Unauthorized"}), 401
 
@@ -333,22 +333,21 @@ def profile():
                         filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
                         
                         # --- PILLOW IMAGE ENHANCEMENT & RESIZING ---
-                        # Image ko memory mein open karein
+                      
                         img = Image.open(file)
                         
-                        # Agar image RGBA (transparent PNG) hai, toh error se bachne ke liye RGB convert karein
+                  
                         if img.mode != 'RGB':
                             img = img.convert('RGB')
                         
-                        # Precise resolution set karein (200x200 for crisp profile pic)
+                       
                         output_size = (200, 200)
                         img.thumbnail(output_size)
                         
-                        # Optimize karke save karein (Quality maintain karte hue file size kam)
+                        
                         img.save(filepath, format='JPEG', optimize=True, quality=85)
                         
-                        # Database mein naya naam update karna (Hamesha .jpg mein save hoga)
-                        # Ensure the filename ends with .jpg since we saved as JPEG
+                        
                         new_filename = filename.rsplit('.', 1)[0] + '.jpg'
                         user.profile_pic = new_filename
         db.session.commit()
@@ -464,7 +463,7 @@ def calendar_view():
 
 @app.route("/api/tasks")
 def api_tasks():
-    # Yeh route calendar ko events (tasks) JSON format mein dega
+    
     if "user_id" not in session:
         return jsonify([])
     
@@ -472,7 +471,7 @@ def api_tasks():
     events = []
     
     for task in tasks:
-        # Status ke hisaab se color code
+        
         color = "#198754" if task.status == "Completed" else ("#0d6efd" if task.status == "In Progress" else "#6c757d")
         if task.due_date < date.today().isoformat() and task.status != "Completed":
             color = "#dc3545" # Overdue (Red)
@@ -482,7 +481,7 @@ def api_tasks():
             "title": task.title,
             "start": task.due_date,
             "color": color,
-            "url": f"/edit_task/{task.id}?next=/calendar" # Click karne par edit page khulega
+            "url": f"/edit_task/{task.id}?next=/calendar" 
         })
         
     return jsonify(events)

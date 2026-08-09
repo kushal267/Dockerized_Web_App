@@ -11,15 +11,15 @@
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- SweetAlert2 (For Global Popups) -->
+    <!-- Popups -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        /* Smooth transition for dark mode */
+        
         body {
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-        /* Custom styling for navbar profile pic hover */
+        
         .nav-profile-pic:hover {
             transform: scale(1.1);
         }
@@ -35,7 +35,7 @@
                 <i class="fas fa-tasks text-primary me-2"></i> Smart Task Manager
             </a>
             
-            <!-- Right Side Container (Profile Pic + Mobile Hamburger Menu) -->
+            <!-- Right Side Container -->
             <div class="d-flex align-items-center order-lg-3 ms-auto">
                 {% if current_user %}
                     <!-- Chrome-Style Profile Pic -->
@@ -59,7 +59,7 @@
                 </button>
             </div>
             
-            <!-- Navbar Links (Collapsible) -->
+            <!-- Navbar Links  -->
             <div class="collapse navbar-collapse order-lg-2" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center gap-2">
                     
@@ -113,13 +113,24 @@
         {% endblock %}
     </main>
 
-    <!-- Professional Footer -->
-    <footer class="bg-dark text-white text-center py-3 mt-auto border-top border-secondary">
-        <div class="container">
-            <small>&copy; 2026 Smart Task Manager. Build with <i class="fas fa-heart text-danger"></i> using Flask.</small>
+    
+    <!-- FOOTER -->
+    <footer class="w-100 bg-dark text-light py-4 mt-auto">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center small">
+            
+            
+            <div class="mb-2 mb-md-0">
+                <a href="#" class="text-decoration-none text-light opacity-75 me-4">Privacy Policy</a>
+                <a href="#" class="text-decoration-none text-light opacity-75">Terms of use</a>
+            </div>
+            
+           >
+            <div class="opacity-75">
+                Copyright &copy; 2026 Smart Task Manager. All rights reserved.
+            </div>
+            
         </div>
     </footer>
-
     <!-- Bootstrap 5 JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 

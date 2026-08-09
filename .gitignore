@@ -5,3 +5,4 @@ database/app.db
 instance/
 .vscode/
 .env
+*.db

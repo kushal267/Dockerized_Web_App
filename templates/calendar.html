@@ -12,7 +12,7 @@
     </div>
 </div>
 
-<!-- Add Task Modal -->
+<!--  Task Modal -->
 <div class="modal fade" id="addTaskModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -60,9 +60,9 @@
                 right: 'dayGridMonth,timeGridWeek,listWeek'
             },
             themeSystem: 'bootstrap5',
-            events: '/api/tasks', // Backend se tasks fetch karega
+            events: '/api/tasks', // Backend task fetching
             
-            // Date click karne par Modal open karega
+            
             dateClick: function(info) {
                 document.getElementById('modalDueDate').value = info.dateStr;
                 document.getElementById('selectedDateText').innerText = info.dateStr;

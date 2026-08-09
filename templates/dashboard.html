@@ -129,7 +129,7 @@ Dashboard
     </div>
     {% endif %}
 
-    <!-- AI TASK GENERATOR CARD (NEW) 
+    <!-- AI TASK GENERATOR CARD  
     <div class="card shadow-sm border-0 rounded-4 mb-4" style="background: linear-gradient(135deg, #f3e8ff 0%, #e0f2fe 100%);">
         <div class="card-body p-4">
             <div class="d-flex align-items-center mb-3">
@@ -177,7 +177,7 @@ Dashboard
             {% endif %}
         </form>
 
-        <!-- SMART QUICK FILTERS -->
+        <!-- QUICK FILTERS -->
         <div class="d-flex gap-2 mb-4 flex-wrap">
             <span class="text-muted fw-bold align-self-center me-2">Quick Filters:</span>
             <a href="/dashboard" class="btn btn-sm btn-outline-secondary rounded-pill">All Tasks</a>
@@ -185,8 +185,7 @@ Dashboard
             <a href="/dashboard?filter=today" class="btn btn-sm btn-outline-primary rounded-pill">📅 Due Today</a>
             <a href="/dashboard?filter=overdue" class="btn btn-sm btn-outline-warning rounded-pill text-dark">⚠️ Overdue</a>
         </div>
-        <a href="/export" class="btn btn-success mb-4">Export Excel</a>
-
+        
         <!-- ADD TASK FORM -->
         <hr>
         <h5 class="mb-3">Add New Task Manually</h5>
@@ -230,7 +229,7 @@ Dashboard
         <!-- Column 1: PENDING -->
         <div class="col-md-4 mb-4" id="pending-col">
             <div class="h5 text-center bg-secondary text-white p-2 rounded shadow-sm">Pending</div>
-            <div class="bg-light p-3 rounded shadow-sm kanban-list" id="pending-list" data-status="Pending" style="min-height: 50vh;">
+            <div class="bg-light p-3 rounded shadow-sm kanban-list" id="pending-list" data-status="Pending" style="height: 60vh; overflow-y: auto; overflow-x: hidden;">
                 
                 <div class="empty-state text-center mt-5 opacity-50">
                     <div class="display-3 mb-2">☕</div>
@@ -243,12 +242,16 @@ Dashboard
                         <div class="card shadow-sm mb-3 p-3 border-start border-4 border-secondary task-item" data-id="{{ task.id }}" style="cursor: grab;">
                             <h6 class="fw-bold">{{ task.title }}</h6>
                             <p class="text-muted small mb-2">{{ task.description }}</p>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-1">
                                 <span class="badge {% if task.priority == 'High' %}bg-danger{% elif task.priority == 'Medium' %}bg-warning text-dark{% else %}bg-success{% endif %}">
                                     {{ task.priority }}
                                 </span>
-                                <small class="fw-bold {% if task.due_date < today %}text-danger{% else %}text-muted{% endif %}">
-                                    {% if task.due_date < today %}⚠️ Overdue ({{ task.due_date }}){% else %}{{ task.due_date }}{% endif %}
+                                <small class="fw-bold {% if task.due_date < today %}text-danger{% else %}text-muted{% endif %}" style="font-size: 0.82rem;">
+                                    {% if task.due_date < today %}
+                                        <span class="d-none">overdue</span>⚠️ {{ task.due_date }}
+                                    {% else %}
+                                        📅 {{ task.due_date }}
+                                    {% endif %}
                                 </small>
                             </div>
                             <div class="mt-2 text-end border-top pt-2">
@@ -277,12 +280,16 @@ Dashboard
                         <div class="card shadow-sm mb-3 p-3 border-start border-4 border-primary task-item" data-id="{{ task.id }}" style="cursor: grab;">
                             <h6 class="fw-bold">{{ task.title }}</h6>
                             <p class="text-muted small mb-2">{{ task.description }}</p>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-1">
                                 <span class="badge {% if task.priority == 'High' %}bg-danger{% elif task.priority == 'Medium' %}bg-warning text-dark{% else %}bg-success{% endif %}">
                                     {{ task.priority }}
                                 </span>
-                                <small class="fw-bold {% if task.due_date < today %}text-danger{% else %}text-muted{% endif %}">
-                                    {% if task.due_date < today %}⚠️ Overdue ({{ task.due_date }}){% else %}{{ task.due_date }}{% endif %}
+                                <small class="fw-bold {% if task.due_date < today %}text-danger{% else %}text-muted{% endif %}" style="font-size: 0.82rem;">
+                                    {% if task.due_date < today %}
+                                        <span class="d-none">overdue</span>⚠️ {{ task.due_date }}
+                                    {% else %}
+                                        📅 {{ task.due_date }}
+                                    {% endif %}
                                 </small>
                             </div>
                             <div class="mt-2 text-end border-top pt-2">
@@ -321,7 +328,31 @@ Dashboard
         </div>
 
     </div>
-</div>
+    
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="mt-1 mb-2">
+        <a href="/export" class="btn btn-outline-success btn-sm rounded-pill px-3 shadow-sm" title="Export tasks to Excel"></a>
+        <i class="fas fa-download me-1"></i> Export Excel
+    </div>
+</div>  <!--
+    <footer class="w-100 bg-white border-top py-4 mt-5">
+    <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center text-muted small">
+        
+        Left Side: Links 
+        <div class="mb-2 mb-md-0">
+            <a href="#" class="text-decoration-none text-muted me-4 hover-primary">Privacy Policy</a>
+            <a href="#" class="text-decoration-none text-muted hover-primary">Terms of use</a>
+        </div>
+        
+         Right Side: Copyright 
+        <div>
+            Copyright &copy; 2026 Smart Task Manager. All rights reserved.
+        </div>
+        
+    </div>
+    </footer>
+-->
+
 
 <script>
     function deleteTask(id){
@@ -360,7 +391,7 @@ Dashboard
                     const taskId = itemEl.getAttribute('data-id');
                     const newStatus = toList.getAttribute('data-status');
                     
-                    // Agar task alag column mein drop hua hai tabhi database update karein
+                    
                     if (evt.from !== toList) {
                         fetch(`/update_status/${taskId}`, {
                             method: 'POST',
@@ -370,7 +401,7 @@ Dashboard
                         .then(response => response.json())
                         .then(data => {
                             if(data.success) {
-                                // SweetAlert popup bina page refresh kiye
+                                // SweetAlert popup
                                 Swal.fire({
                                     toast: true, position: 'top-end', icon: 'success', 
                                     title: 'Moved to ' + newStatus, showConfirmButton: false, timer: 2000
@@ -401,7 +432,7 @@ Dashboard
                 }, 150);
             }
 
-            // 2. Get local 'Today' date string (YYYY-MM-DD)
+            // 2. Get local 'Today' 
             const d = new Date();
             const todayStr = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 
@@ -427,7 +458,7 @@ Dashboard
                     if (filterQuery === 'today' && dateText.includes(todayStr)) isMatch = true;
                 }
 
-                // Spotlight UI Apply karna
+                // Spotlight UI Apply 
                 if (isMatch) {
                     task.classList.add('shadow-lg');
                     task.style.border = "2px solid #0ea5e9"; 
@@ -437,7 +468,7 @@ Dashboard
                     task.style.transition = "all 0.3s ease";
                     matchCount++;
                 } else {
-                    task.style.opacity = "0.25"; // Ab yeh perfectly fade hoga
+                    task.style.opacity = "0.25"; 
                     task.style.filter = "grayscale(80%)"; 
                     task.style.transform = "scale(0.98)";
                     task.style.transition = "all 0.3s ease";
@@ -445,7 +476,7 @@ Dashboard
                 }
             });
 
-            // Agar koi result nahi mila toh SweetAlert
+        
             if (matchCount === 0 && allTasks.length > 0) {
                 Swal.fire({
                     toast: true, position: 'top-end', icon: 'info', 
