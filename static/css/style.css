@@ -188,3 +188,45 @@ from{
 }
 
 }
+
+/* 📱 MOBILE RESPONSIVE DESIGN */
+@media screen and (max-width: 768px) {
+    
+    .container {
+        width: 95%;
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+   
+    input[type="email"], 
+    input[type="password"], 
+    button, 
+    .btn {
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    
+    .task-item {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+    }
+
+    
+    .task-actions {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+    h2 {
+        font-size: 1.4rem;
+    }
+}
