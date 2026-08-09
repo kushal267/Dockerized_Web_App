@@ -414,6 +414,18 @@ Dashboard
             });
         });
     });
+new Sortable(columnElement, {
+    group: 'shared',
+    animation: 150,
+    
+    
+    delay: 200,             
+    delayOnTouchOnly: true, 
+    
+    onEnd: function (evt) {
+        // ... (aapka baaki ka code) ...
+    }
+});   
 </script>
 <!-- Spotlight & Auto-Scroll Script -->
 <script>

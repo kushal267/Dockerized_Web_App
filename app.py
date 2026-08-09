@@ -33,15 +33,17 @@ from flask_jwt_extended import (
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = "secret123"
+app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "secret123")
 
-app.config["JWT_SECRET_KEY"]="jwt-secret"
+app.config["JWT_SECRET_KEY"]= os.getenv("JWT_SECRET_KEY", "jwt-secret")
 
 jwt = JWTManager(app)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = \
-    'sqlite:///app.db'
+db_url = os.getenv("DATABASE_URL")
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
 
+app.config['SQLALCHEMY_DATABASE_URI'] = db_url or 'sqlite:///app.db'
 db.init_app(app)
 
 with app.app_context():
@@ -84,7 +86,8 @@ def inject_user():
 
 @app.route("/", methods=["GET", "POST"])
 def login():
-
+    if "user_id" in session:
+        return redirect("/dashboard")
     if request.method == "POST":
 
         email = request.form["email"].strip()
@@ -154,7 +157,8 @@ def authorize():
 
 @app.route("/register",  methods=["GET", "POST"])
 def register():
-
+    if "user_id" in session:
+        return redirect("/dashboard")
     if request.method == "POST":
 
         name = request.form["name"].strip()
