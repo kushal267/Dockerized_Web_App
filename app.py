@@ -214,13 +214,20 @@ def profile():
             file = request.files['profile_pic']
             if file and file.filename != '':
                 filename = secure_filename(file.filename)
-                filepath = os.path.join(app.config["UPLOAD_FOLDER"], filename)
+                
+                # Yeh raha fix: Extension ko .jpg mein convert kiya taaki disk aur DB match karein
+                name_only = filename.rsplit('.', 1)[0] if '.' in filename else filename
+                new_filename = name_only + '.jpg'
+                
+                filepath = os.path.join(app.config["UPLOAD_FOLDER"], new_filename)
+                
                 img = Image.open(file)
                 if img.mode != 'RGB':
                     img = img.convert('RGB')
+                
                 img.thumbnail((200, 200))
                 img.save(filepath, format='JPEG', optimize=True, quality=85)
-                new_filename = filename.rsplit('.', 1)[0] + '.jpg'
+                
                 user.profile_pic = new_filename
         db.session.commit()
         return redirect("/profile")
