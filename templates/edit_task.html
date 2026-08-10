@@ -1,20 +1,14 @@
 {% extends "base.html" %}
-
-{% block title %}
-Edit Task
-{% endblock %}
-
+{% block title %}Edit Task{% endblock %}
 {% block content %}
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow-lg border-0 rounded-3">
-                
                 <!-- Card Header -->
                 <div class="card-header bg-dark text-white text-center py-3 rounded-top">
                     <h4 class="mb-0">Edit Task</h4>
                 </div>
-                
                 <!-- Card Body -->
                 <div class="card-body p-4 p-md-5 bg-light shadow-inner">
                     <form method="POST">
@@ -24,16 +18,13 @@ Edit Task
                             <label class="form-label fw-bold text-muted">Task Title</label>
                             <input type="text" name="title" value="{{ task.title }}" class="form-control form-control-lg border-secondary shadow-sm" required>
                         </div>
-
                         <!-- Description Field -->
                         <div class="mb-4">
                             <label class="form-label fw-bold text-muted">Description</label>
                             <textarea name="description" class="form-control border-secondary shadow-sm" rows="4">{{ task.description }}</textarea>
                         </div>
-
                         <!-- Priority, Status, and Due Date Row -->
                         <div class="row mb-4">
-                            
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold text-muted">Priority</label>
                                 <select name="priority" class="form-select border-secondary shadow-sm">
@@ -42,7 +33,6 @@ Edit Task
                                     <option value="High" {% if task.priority == "High" %}selected{% endif %}>High</option>
                                 </select>
                             </div>
-                            
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold text-muted">Status</label>
                                 <select name="status" class="form-select border-secondary shadow-sm">
@@ -51,20 +41,16 @@ Edit Task
                                     <option value="Completed" {% if task.status == "Completed" %}selected{% endif %}>Completed</option>
                                 </select>
                             </div>
-                            
                             <div class="col-md-4 mb-3">
                                 <label class="form-label fw-bold text-muted">Due Date</label>
                                 <input type="date" name="due_date" value="{{ task.due_date }}" class="form-control border-secondary shadow-sm" required>
                             </div>
-
                         </div>
-
                         <!-- Action Buttons -->
-                        <div class="d-flex justify-content-end gap-3 mt-4  border-top pt-4">
+                        <div class="d-flex justify-content-end gap-3 mt-4 border-top pt-4">
                             <a href="{{ next_url }}" class="btn btn-outline-secondary px-4 fw-bold shadow-sm">Cancel</a>
                             <button type="submit" class="btn btn-success px-4 fw-bold">Update Task</button>
                         </div>
-
                     </form>
                 </div>
             </div>

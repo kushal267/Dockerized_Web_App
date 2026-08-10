@@ -1,18 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Calendar View{% endblock %}
 {% block content %}
-
 <!-- FullCalendar CSS -->
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-
 <div class="container mt-5 mb-5">
     <h2 class="mb-4">Task Calendar</h2>
     <div class="card shadow p-4 border-0 rounded-4">
         <div id='calendar'></div>
     </div>
 </div>
-
-<!--  Task Modal -->
+<!-- Task Modal -->
 <div class="modal fade" id="addTaskModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -48,7 +45,6 @@
     </div>
   </div>
 </div>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         var calendarEl = document.getElementById('calendar');
@@ -60,9 +56,7 @@
                 right: 'dayGridMonth,timeGridWeek,listWeek'
             },
             themeSystem: 'bootstrap5',
-            events: '/api/tasks', // Backend task fetching
-            
-            
+            events: '/api/tasks',
             dateClick: function(info) {
                 document.getElementById('modalDueDate').value = info.dateStr;
                 document.getElementById('selectedDateText').innerText = info.dateStr;
