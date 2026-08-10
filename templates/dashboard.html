@@ -231,7 +231,7 @@ Dashboard
             <div class="h5 text-center bg-secondary text-white p-2 rounded shadow-sm">Pending</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="pending-list" data-status="Pending" style="height: 60vh; overflow-y: auto; overflow-x: hidden;">
                 
-                <div class="empty-state text-center mt-5 opacity-50">
+                <div class="empty-state text-center mt-5 opacity-50" style="pointer-events: none; user-select: none;">
                     <div class="display-3 mb-2">☕</div>
                     <div class="fw-bold">All caught up!</div>
                     <small>No pending tasks here.</small>
@@ -269,7 +269,7 @@ Dashboard
             <div class="h5 text-center bg-primary text-white p-2 rounded shadow-sm">In Progress</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="progress-list" data-status="In Progress" style="min-height: 50vh;">
                 
-                <div class="empty-state text-center mt-5 opacity-50">
+                <div class="empty-state text-center mt-5 opacity-50" style="pointer-events: none; user-select: none;">
                     <div class="display-3 mb-2">🚀</div>
                     <div class="fw-bold">Nothing in progress.</div>
                     <small>Drag a task here to start working.</small>
@@ -307,7 +307,7 @@ Dashboard
             <div class="h5 text-center bg-success text-white p-2 rounded shadow-sm">Completed</div>
             <div class="bg-light p-3 rounded shadow-sm kanban-list" id="completed-list" data-status="Completed" style="min-height: 50vh;">
                 
-            <div class="empty-state text-center mt-5 opacity-50">
+            <div class="empty-state text-center mt-5 opacity-50" style="pointer-events: none; user-select: none;">
                 <div class="display-3 mb-2">🎯</div>
                 <div class="fw-bold">No goals crushed yet.</div>
                 <small>Complete tasks to see them here.</small>
@@ -372,7 +372,6 @@ Dashboard
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-
 <script>
     // Initialize Drag and Drop
     document.addEventListener("DOMContentLoaded", function() {
@@ -383,14 +382,19 @@ Dashboard
             new Sortable(el, {
                 group: 'kanban', // Allows dragging between columns
                 animation: 150,
-                ghostClass: 'bg-light', // Class added while dragging
+                ghostClass: 'bg-light', 
+                
+               
+                filter: '.empty-state', 
+                delay: 200,             
+                delayOnTouchOnly: true, 
+
                 onEnd: function (evt) {
                     const itemEl = evt.item; 
                     const toList = evt.to;   
                     
                     const taskId = itemEl.getAttribute('data-id');
                     const newStatus = toList.getAttribute('data-status');
-                    
                     
                     if (evt.from !== toList) {
                         fetch(`/update_status/${taskId}`, {
@@ -406,7 +410,11 @@ Dashboard
                                     toast: true, position: 'top-end', icon: 'success', 
                                     title: 'Moved to ' + newStatus, showConfirmButton: false, timer: 2000
                                 });
-                                location.reload(); // Quick visual refresh to update strikethrough/colors
+                                
+                                
+                                setTimeout(() => {
+                                    location.reload(); 
+                                }, 300);
                             }
                         });
                     }
@@ -414,17 +422,6 @@ Dashboard
             });
         });
     });
-new Sortable(columnElement, {
-    group: 'shared',
-    animation: 150,
-    filter: '.empty-state',
-    delay: 200,             
-    delayOnTouchOnly: true, 
-    
-    onEnd: function (evt) {
-        // ... (aapka baaki ka code) ...
-    }
-});   
 </script>
 <!-- Spotlight & Auto-Scroll Script -->
 <script>
