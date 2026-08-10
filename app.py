@@ -97,15 +97,34 @@ def authorize():
 def register():
     if "user_id" in session:
         return redirect("/dashboard")
+        
     if request.method == "POST":
-        name = request.form["name"].strip()
-        email = request.form["email"].strip()
-        password = request.form["password"].strip()
-        hashed = generate_password_hash(password)
-        user = User(name=name, email=email, password=hashed)
-        db.session.add(user)
-        db.session.commit()
-        return redirect("/")
+        try:
+            name = request.form["name"].strip()
+            email = request.form["email"].strip()
+            password = request.form["password"].strip()
+            
+            
+            existing_user = User.query.filter_by(email=email).first()
+            if existing_user:
+                flash("Email already registered! Please log in.", "danger")
+                return redirect("/register")
+                
+            hashed = generate_password_hash(password)
+            user = User(name=name, email=email, password=hashed)
+            
+            db.session.add(user)
+            db.session.commit()
+            
+            flash("Registration successful! Please log in.", "success")
+            return redirect("/")
+            
+        except Exception as e:
+            db.session.rollback() 
+            print(f"Registration Error: {e}")
+            flash("Database connection error! Please try again in a moment.", "danger")
+            return redirect("/register")
+            
     return render_template("register.html")
 
 @app.route("/add_task", methods=["POST"])
