@@ -1,10 +1,17 @@
 # 🚀 Smart Task Manager (Cloud-Native Web App)
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)
-![Flask](https://img.shields.io/badge/Flask-Framework-black?logo=flask)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Serverless-blue?logo=postgresql)
-![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker)
-![Render](https://img.shields.io/badge/Deployed_on-Render-46E3B7?logo=render)
+<div align="center">
+  <img src="https://img.shields.io/badge/Python-3.9+-3776AB?logo=python&logoColor=white" alt="Python"/>
+  <img src="https://img.shields.io/badge/Flask-Microframework-black?logo=flask" alt="Flask"/>
+  <img src="https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black" alt="JavaScript"/>
+  <img src="https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white" alt="Bootstrap"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-Serverless-336791?logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Pandas-Data_Export-150458?logo=pandas&logoColor=white" alt="Pandas"/>
+  <img src="https://img.shields.io/badge/Google_OAuth-Secured-4285F4?logo=google&logoColor=white" alt="Google OAuth"/>
+  <img src="https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker&logoColor=white" alt="Docker"/>
+  <img src="https://img.shields.io/badge/Deployed_on-Render-46E3B7?logo=render&logoColor=white" alt="Render"/>
+</div>
+
 
 A production-ready, cloud-native Task Management Platform engineered with a modern full-stack architecture. It combines a responsive frontend, Flask backend, PostgreSQL database, secure authentication, interactive task management, Docker containerization, and cloud deployment, while demonstrating practical cloud computing and DevOps concepts such as serverless database integration, stateless application design, environment-based configuration, and CI/CD deployment workflows.
 
