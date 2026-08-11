@@ -6,7 +6,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker)
 ![Render](https://img.shields.io/badge/Deployed_on-Render-46E3B7?logo=render)
 
-A production-ready, highly scalable Task Management Platform engineered with a cloud-first architecture. It integrates secure Google OAuth authentication, interactive Kanban boards, advanced data analytics, and is fully containerized for seamless CI/CD pipeline deployments.
+A production-ready, cloud-native Task Management Platform engineered with a modern full-stack architecture. It combines a responsive frontend, Flask backend, PostgreSQL database, secure authentication, interactive task management, Docker containerization, and cloud deployment, while demonstrating practical cloud computing and DevOps concepts such as serverless database integration, stateless application design, environment-based configuration, and CI/CD deployment workflows.
 
 **[🔴 Live Demo: Click Here to View Application](https://smart-task-manager-yhb8.onrender.com)** 
 
@@ -21,10 +21,25 @@ This application is built to be robust, stateless, and optimized for cloud envir
 *   **Ephemeral Storage Handling:** Engineered to work flawlessly on stateless cloud instances. For instance, the **Excel Export** feature utilizes `Pandas` and `io.BytesIO` to generate `.xlsx` files entirely in RAM (in-memory buffer), preventing data leaks and bypassing the need for persistent disk storage.
 *   **On-the-Fly Image Processing:** User profile image are processed server-side using `Pillow (PIL)`. Images are automatically converted to standard RGB/JPEG formats, resized, and compressed to optimize bandwidth and cloud storage before database commit.
 *   **Robust Error Handling:** Implements SQLAlchemy session rollbacks (`db.session.rollback()`) and transaction management to prevent server crashes during concurrent database operations or connection timeouts.
-
 ---
-## 🚀 Quick Feature Summary
+## ☁️ Cloud Computing Concepts Demonstrated
+
+This project demonstrates practical implementation of several cloud computing concepts:
+
+- **Cloud Deployment:** Publicly deployed web application using Render.
+- **Containerization:** Docker-based application packaging.
+- **Managed Database:** Serverless PostgreSQL using Neon.
+- **Environment-based Configuration:** Sensitive configuration managed through environment variables.
+- **Stateless Application Design:** Application designed to operate without depending on local persistent server storage.
+- **In-Memory Processing:** Excel files generated using in-memory buffers.
+- **Cloud Authentication:** Google OAuth 2.0 integration.
+- **CI/CD Workflow:** GitHub-based source control integrated with cloud deployment.
+- **Production Configuration:** Separate environment configuration for deployment.
+- **Scalable Architecture:** Separation of frontend, backend, database, and external authentication services.
+---
+## 🚀 Quick Feature 
 *   ** Responsive UI:** Fully responsive interface for mobile and desktop screens.
+*   ** RESTful API Integration:** Internal JSON API endpoints powering asynchronous frontend operations without page reloads.
 *   ** Authentication:** User registration and secure login (including Google OAuth).
 *   ** Task Management:** Create, edit, and delete tasks seamlessly.
 *   ** Priority Levels and Status Tracking:** Categorize tasks into Low, Medium, or High priorities.Move tasks through Pending, In Progress, and Completed states.
@@ -72,17 +87,17 @@ Task state management is handled through a highly interactive Kanban interface. 
   <em>Fig 3: Active Kanban Board with color-coded priority badges and drag-and-drop capability.</em>
 </div>
 
-### 6. Seamless Task Editing & Edge-Case Handling
+### 4. Seamless Task Editing & Edge-Case Handling
 Dedicated views for task modification ensure data integrity.
 *   *Tech Highlight:* The application utilizes URL query parameters (e.g., `?next=/dashboard#kanban-board-section`) to redirect users precisely back to their previous scroll position after an update.
 
 <div align="center">
   <img src="screenshots/edit task.png" alt="Edit Task Form" width="700"/>
   <br>
-  <em>Fig 6: Clean and focused Task Editing interface.</em>
+  <em>Fig 4: Clean and focused Task Editing interface.</em>
 </div>
 
-### 4. Dynamic Calendar Integration
+### 5. Dynamic Calendar Integration
 For deadline-focused users, tasks are mapped onto a full-month interactive calendar.
 *   *Tech Highlight:* Powered by `FullCalendar.io`. Tasks are fetched dynamically via an internal JSON API endpoint (`/api/tasks`). Overdue tasks are automatically flagged in red through backend logic.
 User can Add new task by clicking any date and Edit previous task from Calendar
@@ -90,10 +105,10 @@ User can Add new task by clicking any date and Edit previous task from Calendar
   <img src="screenshots/calender add and edit task.png" alt="Calendar View" width="700"/>
   
   <br>
-  <em>Fig 4: FullCalendar view mapping tasks to their specific due dates.</em>
+  <em>Fig 5: FullCalendar view mapping tasks to their specific due dates.</em>
 </div>
 
-### 5. Advanced Profile Management & UI Modals
+### 6. Advanced Profile Management & UI Modals
 Users can manage their personal data and profile picture. The UI employs sleek modals and hover states for an intuitive experience.
 *   *Tech Highlight:* Clicking the pencil button on profile triggers a `SweetAlert2` modal intercepting standard form behavior, allowing users to choose between uploading a new file or triggering a backend deletion route.
 
@@ -101,10 +116,16 @@ Users can manage their personal data and profile picture. The UI employs sleek m
   <img src="screenshots/profile1.1.png" alt="Profile Upload Modal" width="400"/> 
   <img src="screenshots/profile1.2.png" alt="Updated Profile" width="400"/>
   <br>
-  <em>Fig 5: Interactive profile picture update flow using SweetAlert2 and Python PIL for backend processing.</em>
+  <em>Fig 6: Interactive profile picture update flow using SweetAlert2 and Python PIL for backend processing.</em>
 </div>
 
+### 7. Excel Data Export
 
+<div align="center">
+  <img src="screenshots/exportexcel.png" alt="Excel Export" width="700">
+  <br>
+  <em>Task data export feature for downloading task records in Excel (.xlsx) format.</em>
+</div>
 ---
 
 ## 🛠️ Comprehensive Tech Stack
@@ -121,9 +142,13 @@ Users can manage their personal data and profile picture. The UI employs sleek m
 *   **Pandas & OpenPyXL:** For generating complex Excel data exports.
 *   **Pillow (PIL):** Server-side image rendering and optimization.
 *   **Werkzeug:** Cryptographic password hashing.
-
+*   **RESTful Architecture:** Custom backend routes configured to serve and consume JSON payloads for the JavaScript `fetch` API.
+   
 **Database & Cloud Infrastructure:**
-*   **Neon.tech:** Serverless PostgreSQL Database.
+*   **PostgreSQL:** Primary relational database for persistent application data.
+*   **Neon.tech:** Serverless PostgreSQL hosting for production deployment
+*   **SQLAlchemy:** ORM for database models, queries, relationships, and transaction management.
+*   
 *   **Docker:** Application containerization.
 *   **Render:** Cloud PaaS for automated CI/CD deployment.
 *   **Google Cloud Console:** Identity and Access Management (OAuth 2.0 API).
@@ -263,7 +288,7 @@ All rights reserved unless otherwise stated
 
 ## Kushal Patel
 - **GitHub:** [@kushal267](https://github.com/kushal267)
-- **LinkedIn:** linkedin.com/in/kushal-patel-5195bb381
+- **LinkedIn:** [@kushalpatel](linkedin.com/in/kushal-patel-5195bb381)
 
 ---
 
