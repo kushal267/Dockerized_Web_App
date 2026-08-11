@@ -123,7 +123,7 @@ Users can manage their personal data and profile picture. The UI employs sleek m
 Task data export feature for downloading task records in Excel (.xlsx) format.
 *   *Tech Highlight:* Utilizes Pandas and io.BytesIO to generate files in-memory without saving them to the server disk, ensuring maximum security and zero storage bloat
 <div align="center">
-  <img src="screenshots/excelexport.png.png" alt="Excel Export" width="700">
+  <img src="screenshots/excelexport.png" alt="Excel Export" width="700">
   <br>
   <em>Task data export feature for downloading task records in Excel (.xlsx) format.</em>
 </div>
